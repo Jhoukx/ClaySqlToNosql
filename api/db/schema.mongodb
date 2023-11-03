@@ -1,0 +1,1062 @@
+use('ClaydB');
+// Counters for all collections
+db.counters.insertMany([
+    { id: "ubicacionId", sequence_value: 0 },
+    { id: "proveedorId", sequence_value: 0 },
+    { id: "clienteId", sequence_value: 0 },
+    { id: "ordenId", sequence_value: 0 },
+    { id: "empleadoId", sequence_value: 0 },
+    { id: "empresaId", sequence_value: 0 },
+    { id: "ventaId", sequence_value: 0 },
+    { id: "inventarioId", sequence_value: 0 },
+    { id: "prendaId", sequence_value: 0 },
+    { id: "insumoId", sequence_value: 0 }
+]);
+function nextID(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+};
+
+db.createCollection("ubicacion");
+db.ubicacion.insertMany([
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Medellín",
+        departamento:"Antioquia",
+        pais:"Colombia"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Bogotá, D.C.",
+        departamento: "Bogotá",
+        pais: "Colombia"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Zipaquirá",
+        departamento: "Cundinamarca",
+        pais: "Colombia"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Cali",
+        departamento: "Valle del Cauca",
+        pais: "Colombia"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Buenos Aires",
+        departamento: "Buenos Aires",
+        pais: "Colombia"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Ciudad de México",
+        departamento: "Ciudad de México",
+        pais: "México"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Miami",
+        departamento: "Miami",
+        pais: "Estados Unidos"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Londres",
+        departamento: "Londres",
+        pais: "Inglaterra"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "París",
+        departamento: "París",
+        pais: "Francia"
+    },
+    {
+        id: Number(nextID("ubicacion")),
+        municipio: "Tokio",
+        departamento: "Tokio",
+        pais: "Japón"
+    }
+]);
+db.createCollection("proveedor");
+db.proveedor.insertMany([
+    {
+        id:Number(nextID('proveedor')),
+        NitProveedor: '900000000-1',
+        Nombre: 'Proveedor 1',
+        tipoPersona:'Cliente',
+        IdUbicacion: 1
+    },
+    {
+        id: Number(nextID('proveedor')),
+        NitProveedor: '900000000-2',
+        Nombre: 'Proveedor 2',
+        tipoPersona:'Proveedor',
+        IdUbicacion:2
+    },
+    {
+        id: Number(nextID('proveedor')),
+        NitProveedor: '900000000-3',
+        Nombre: 'Proveedor 3',
+        tipoPersona:'Empleado',
+        IdUbicacion:3
+    },
+    {
+        id: Number(nextID('proveedor')),
+        NitProveedor: '900000000-4',
+        Nombre:'Proveedor 4',
+        tipoPersona:'Cliente',
+        IdUbicacion:4
+    },
+    {
+        id: Number(nextID('proveedor')),
+        NitProveedor: '900000000-5',
+        Nombre:'Proveedor 5',
+        tipoPersona: 'Proveedor',
+        IdUbicacion:5
+    }
+]);
+db.createCollection('cliente');
+db.cliente.insertMany([
+    {
+        id:Number(nextID('cliente')),
+        nombre:"Juan Pérez",
+        IdCliente: '123456789',
+        tipo_persona:"Cliente",
+        fechaRegistro: new Date('2023-07-20'),
+        IdUbicacion:1
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre: "María López",
+        IdCliente: '987654321',
+        tipo_persona: "Proveedor",
+        fechaRegistro: new Date('2023-08-03'),
+        IdUbicacion:2
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre:"Sofía García",
+        IdCliente: '321654987',
+        tipo_persona: "Empleado",
+        fechaRegistro: new Date('2023-08-10'),
+        IdUbicacion:3
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre:"Pedro Gómez",
+        IdCliente: '789456123',
+        tipo_persona: "Cliente",
+        fechaRegistro: new Date('2023-08-17'),
+        IdUbicacion:4
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre:"Ana Sánchez",
+        IdCliente: '234567891',
+        tipo_persona: "Proveedor",
+        fechaRegistro: new Date('2023-08-24'),
+        IdUbicacion:5
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre: "Carlos Hernández",
+        IdCliente: '654987321',
+        tipo_persona: "Empleado",
+        fechaRegistro: new Date('2023-08-31'),
+        IdUbicacion:6
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre: "Luisa Rodríguez",
+        IdCliente: '9876543210',
+        tipo_persona: "Cliente",
+        fechaRegistro: new Date('2023-09-07'),
+        IdUbicacion:7
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre: "Daniela Castillo",
+        IdCliente: '1098765432',
+        tipo_persona:"Proveedor",
+        fechaRegistro: new Date('2023-09-14'),
+        IdUbicacion:8
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre: "Andrés Morales",
+        IdCliente:'3210987654',
+        tipo_persona:"Empleado",
+        fechaRegistro: new Date('2023-09-21'),
+        IdUbicacion:9
+    },
+    {
+        id: Number(nextID('cliente')),
+        nombre: "Camila Gutiérrez",
+        IdCliente:"7654321098",
+        tipo_persona:"Cliente",
+        fechaRegistro: new Date('2023-09-28'),
+        IdUbicacion:10
+    }
+]);
+db.createCollection('orden');
+db.orden.insertMany([
+    {
+        id:Number(nextID('orden')),
+        fecha:new  Date("2023-07-20"),
+        Idmpleado:1,
+        IdCliente:1,
+        detalle_orden:{
+            IdPrenda:1,
+            PrendaId:1,
+            cantidad_producir:10,
+            color: 'Negro',
+            cantidad_producida:5,
+            estado: "Pendiente",
+            tipo_estado: 'Nuevo'
+        }
+    },
+    {
+        id: Number(nextID('orden')),
+        fecha:new  Date("2023-08-03"),
+        Idmpleado:2,
+        IdCliente:2,
+        detalle_orden:{
+            IdPrenda:2,
+            PrendaId:2,
+            cantidad_producir:5,
+            color: 'Blanco',
+            cantidad_producida:3,
+            estado: 'En proceso',
+            tipo_estado: 'En proceso'
+        }
+    },
+    {
+        id: Number(nextID('orden')),
+        fecha:new  Date("2023-08-10"),
+        Idmpleado:3,
+        IdCliente:3,
+        detalle_orden:{
+            IdPrenda:3,
+            PrendaId:3,
+            cantidad_producir:3,
+            color: 'Rojo',
+            cantidad_producida:3,
+            estado: 'Listo para enviar',
+            tipo_estado: 'Listo para enviar'
+        }
+    },
+    {
+        id: Number(nextID('orden')),
+        fecha:new  Date("2023-08-17"),
+        Idmpleado:1,
+        IdCliente:4,
+        detalle_orden:{
+            IdPrenda:4,
+            PrendaId:4,
+            cantidad_producir:2,
+            color: 'Verde',
+            cantidad_producida:2,
+            estado: 'Enviado',
+            tipo_estado: 'Enviado'
+        }
+    },
+    {
+        id: Number(nextID('orden')),
+        fecha:new  Date("2023-08-24"),
+        Idmpleado:2,
+        IdCliente:5,
+        detalle_orden:{
+            IdPrenda:5,
+            PrendaId:5,
+            cantidad_producir:1,
+            color: 'Azul',
+            cantidad_producida:1,
+            estado: "Entregado",
+            tipo_estado: 'Entregado'
+        }
+    }
+]);
+db.createCollection('empleado');
+db.empleado.insertMany([
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Juan Pérez",
+        cargo: "Vendedor",
+        fecha_ingreso: new Date("2023-07-20"),
+        IdUbicacion: 1,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "María López",
+        cargo: 'Administrador',
+        fecha_ingreso: new Date("2023-08-03"),
+        IdUbicacion: 2,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Sofía García",
+        cargo: 'Diseñador',
+        fecha_ingreso: new Date("2023-08-10"),
+        IdUbicacion: 3,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Pedro Gómez",
+        cargo: 'Vendedor',
+        fecha_ingreso: new Date("2023-08-17"),
+        IdUbicacion: 4,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Ana Sánchez",
+        cargo: 'Administrador',
+        fecha_ingreso: new Date("2023-08-24"),
+        IdUbicacion: 5,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Carlos Hernández",
+        cargo: 'Diseñador',
+        fecha_ingreso: new Date("2023-08-31"),
+        IdUbicacion: 6,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Luisa Rodríguez",
+        cargo: 'Vendedor',
+        fecha_ingreso: new Date("2023-09-07"),
+        IdUbicacion: 7,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Daniela Castillo",
+        cargo: 'Administrador',
+        fecha_ingreso: new Date("2023-09-14"),
+        IdUbicacion: 8,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Andrés Morales",
+        cargo: 'Diseñador',
+        fecha_ingreso: new Date("2023-09-21"),
+        IdUbicacion: 9,
+    },
+    {
+        id: Number(nextID('empleado')),
+        nombre: "Camila Gutiérrez",
+        cargo: "Vendedor",
+        fecha_ingreso: new Date("2023-09-28"),
+        IdUbicacion:10,
+    }
+]);
+db.createCollection('empresa');
+db.empresa.insertMany([
+    {
+        id: Number(nextID('empresa')),
+        nit: '900000000-1',
+        razon_social: 'Empresa de Ropa S.A.S.',
+        representante_legal: 'Juan Pérez',
+        FechaCreacion: new Date('2023-01-01'),
+        IdUbicacion: 1
+    },
+    {
+        id: Number(nextID('empresa')),
+        nit: '900000000-2',
+        razon_social: 'Empresa de Calzado S.A.S.',
+        representante_legal: 'María Rodríguez',
+        FechaCreacion: new Date('2023-02-02'),
+        IdUbicacion: 2
+    },
+    {
+        id: Number(nextID('empresa')),
+        nit: '900000000-3',
+        razon_social: 'Empresa de Accesorios S.A.S.',
+        representante_legal: 'Pedro Gómez',
+        FechaCreacion: new Date('2023-03-03'),
+        IdUbicacion: 3
+    },
+    {
+        id: Number(nextID('empresa')),
+        nit: '900000000-4',
+        razon_social: 'Empresa de Textiles S.A.S.',
+        representante_legal: 'Ana García',
+        FechaCreacion: new Date('2023-04-04'),
+        IdUbicacion: 4
+    },
+    {
+        id: Number(nextID('empresa')),
+        nit: '900000000-5',
+        razon_social: 'Empresa de Confección S.A.S.',
+        representante_legal: 'Carlos Hernández',
+        FechaCreacion: new Date('2023-05-05'),
+        IdUbicacion: 5
+    }
+]);
+db.createCollection('venta');
+db.venta.insertMany([
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-07-20"),
+        IdEmpleado:1,
+        IdCliente:1,
+        forma_pago:"Efectivo",
+        detalle_venta:{
+            IdProducto:1,
+            talla: "XS - Extra pequeña",
+            cantidad:2,
+            valor_unit:25000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-08-03"),
+        IdEmpleado:2,
+        IdCliente:2,
+        forma_pago:"Tarjeta de crédito",
+        detalle_venta:{
+            IdProducto:2,
+            talla:"S - Pequeña",
+            cantidad:1,
+            valor_unit:37500
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-08-10"),
+        IdEmpleado:3,
+        IdCliente:3,
+        forma_pago: "Tarjeta de débito",
+        detalle_venta:{
+            IdProducto:3,
+            talla:"M - Mediana",
+            cantidad:3,
+            valor_unit:50000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-08-17"),
+        IdEmpleado:1,
+        IdCliente:4,
+        forma_pago:"Efectivo",
+        detalle_venta:{
+            IdProducto:4,
+            talla:"L - Grande",
+            cantidad:4,
+            valor_unit:62500
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-08-24"),
+        IdEmpleado:2,
+        IdCliente:5,
+        forma_pago:"Tarjeta de crédito",
+        detalle_venta:{
+            IdProducto:5,
+            talla:"XL - Extra grande",
+            cantidad:5,
+            valor_unit:75000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-08-31"),
+        IdEmpleado:3,
+        IdCliente:6,
+        forma_pago:"Tarjeta de débito",
+        detalle_venta:{
+            IdProducto:6,
+            talla:"XXL - Extra extra grande",
+            cantidad:6,
+            valor_unit:125000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-09-07"),
+        IdEmpleado:1,
+        IdCliente:7,
+        forma_pago:"Efectivo",
+        detalle_venta:{
+            IdProducto:7,
+            talla: "M - Mediana",
+            cantidad:10,
+            valor_unit:210000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-09-14"),
+        IdEmpleado:2,
+        IdCliente:8,
+        forma_pago: "Tarjeta de crédito",
+        detalle_venta:{
+            IdProducto:8,
+            talla: "L - Grande",
+            cantidad:20,
+            valor_unit:320000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-09-21"),
+        IdEmpleado:3,
+        IdCliente:9,
+        forma_pago:"Tarjeta de débito",
+        detalle_venta:{
+            IdProducto:9,
+            talla: "M - Mediana",
+            cantidad:5,
+            valor_unit:110000
+        }
+    },
+    {
+        id: Number(nextID('venta')),
+        fecha: new Date("2023-09-28"),
+        IdEmpleado:1,
+        IdCliente:10,
+        forma_pago:"Efectivo",
+        detalle_venta:{
+            IdProducto:10,
+            talla: "M - Mediana",
+            cantidad:5,
+            valor_unit:110000
+        }
+    }
+]);
+db.createCollection('prenda');
+db.prenda.insertMany([
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Camiseta de algodón manga corta",
+        ValorUnitCop: 20000,
+        ValorUnitUsd: 5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR001"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Camisa de manga larga",
+        ValorUnitCop: 30000,
+        ValorUnitUsd: 7.5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR002"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Pantalón de mezclilla",
+        ValorUnitCop: 40000,
+        ValorUnitUsd: 10,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR003"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Vestido de algodón",
+        ValorUnitCop: 50000,
+        ValorUnitUsd: 12.5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el agua",
+        genero: "Masculino",
+        codigo: "PR004"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Zapatos casuales",
+        ValorUnitCop: 60000,
+        ValorUnitUsd: 15,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR005"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Gafas de sol",
+        ValorUnitCop: 10000,
+        ValorUnitUsd: 2.5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR006"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Chaqueta de cuero",
+        ValorUnitCop: 150000,
+        ValorUnitUsd: 37.5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR007"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Traje de baño",
+        ValorUnitCop: 50000,
+        ValorUnitUsd: 12.5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR008"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Gorra",
+        ValorUnitCop: 10000,
+        ValorUnitUsd: 2.5,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR009"
+    },
+    {
+        id: Number(nextID('prenda')),
+        Nombre: "Medias",
+        ValorUnitCop: 5000,
+        ValorUnitUsd: 1.25,
+        estado: "Pendiente",
+        tipo_proteccion: "Protección contra el sol",
+        genero: "Masculino",
+        codigo: "PR010"
+    }
+]);
+db.createCollection('inventario');
+db.inventario.insertMany([
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV001',
+        IdPrenda: 1,
+        ValorUnitCop: 25000,
+        ValorUnitUsd: 6.25,
+        talla: 'XS - Extra pequeña'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV002',
+        IdPrenda: 2,
+        ValorUnitCop: 37500,
+        ValorUnitUsd: 9.375,
+        talla: 'S - Pequeña'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV003',
+        IdPrenda: 3,
+        ValorUnitCop: 50000,
+        ValorUnitUsd: 12.5,
+        talla: 'M - Mediana'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV004',
+        IdPrenda: 4,
+        ValorUnitCop: 62500,
+        ValorUnitUsd: 15.625,
+        talla: 'L - Grande'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV005',
+        IdPrenda: 5,
+        ValorUnitCop: 75000,
+        ValorUnitUsd: 18.75,
+        talla: 'XXL - Extra extra grande'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV006',
+        IdPrenda: 6,
+        ValorUnitCop: 12500,
+        ValorUnitUsd: 3.125,
+        talla: 'XS - Extra pequeña'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV007',
+        IdPrenda: 7,
+        ValorUnitCop: 187500,
+        ValorUnitUsd: 46.875,
+        talla: 'S - Pequeña'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV008',
+        IdPrenda: 8,
+        ValorUnitCop: 62500,
+        ValorUnitUsd: 15.625,
+        talla: 'M - Mediana'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV009',
+        IdPrenda: 9,
+        ValorUnitCop: 12500,
+        ValorUnitUsd: 3.125,
+        talla: 'L - Grande'
+    },
+    {
+        id: Number(nextID('inventario')),
+        CodInv: 'INV010',
+        IdPrenda: 10,
+        ValorUnitCop: 5000,
+        ValorUnitUsd: 1.25,
+        talla: 'XXL - Extra extra grande'
+    }
+]);
+db.createCollection('insumo');
+db.insumo.insertMany([
+    {
+        id: Number(nextID('insumo')),
+        nombre: 'Tela de algodón',
+        valor_unit: 10000,
+        stock_min: 100,
+        stock_max: 1000,
+        IdProveedor:6,
+        IdPrenda:1,
+        Cantidad:2
+    },
+    {
+        id: Number(nextID('insumo')),
+        nombre: 'Tela de poliéster',
+        valor_unit: 20000,
+        stock_min: 50,
+        stock_max: 500,
+        IdProveedor:7,
+        IdPrenda:2,
+        Cantidad:1
+    },
+    {
+        id: Number(nextID('insumo')),
+        nombre: 'Hilo',
+        valor_unit: 5000,
+        stock_min: 20,
+        stock_max: 200,
+        IdProveedor:8,
+        IdPrenda:3,
+        Cantidad:3
+    },
+    {
+        id: Number(nextID('insumo')),
+        nombre: 'Botones',
+        valor_unit: 2000,
+        stock_min: 10,
+        stock_max: 100,
+        IdProveedor:9,
+        IdPrenda:4,
+        Cantidad:2
+    },
+    {
+        id: Number(nextID('insumo')),
+        nombre: 'Cierres',
+        valor_unit: 3000,
+        stock_min: 5,
+        stock_max: 50,
+        IdProveedor:10,
+        IdPrenda:5,
+        Cantidad:1
+    }
+]);
+
+//1. Listar todas las ventas que se realizaron en el mes de julio de 2023
+use('ClaydB');
+db.venta.aggregate([
+    {
+        $match: {
+            fecha: {
+                $gte: new Date("2023-07-01"),
+                $lt: new Date("2023-08-01")
+            }
+        }
+    }
+]);
+//2. Seleccionar todos los empleados con sus respectivos cargos y municipios
+use('ClaydB');
+db.empleado.aggregate([
+    {
+        $lookup: {
+            from: "ubicacion",
+            localField: "IdUbicacion",
+            foreignField: "id",
+            as: "ubicacion"
+        }
+    },
+    {
+        $unwind: "$ubicacion"
+    },
+    {
+        $project: {
+            _id: 0,
+            nombre: 1,
+            cargo: 1,
+            municipio: "$ubicacion.municipio",
+            departamento: "$ubicacion.departamento",
+            pais: "$ubicacion.pais"
+        }
+    }
+]);
+//3. Obtener la lista de todas las ventas con la información de los clientes y la forma de pago
+
+use('ClaydB');
+db.venta.aggregate([
+    {
+        $lookup: {
+            from: "cliente",
+            localField: "IdCliente",
+            foreignField: "id",
+            as: "cliente_info"
+        }
+    },
+    {
+        $unwind: "$cliente_info"
+    },
+    {
+        $project: {
+            _id: 0,
+            VentaId: "$id",
+            ClienteNombre: "$cliente_info.nombre",
+            ClienteId: "$cliente_info.IdCliente",
+            ClienteTipoPersona: "$cliente_info.tipo_persona",
+            ClienteRegistro: "$cliente_info.fechaRegistro",
+            ClienteUbicacion: "$cliente_info.IdUbicacion",
+            FormaPago: "$forma_pago"
+        }
+    }
+]);
+
+//4. Mostrar los detalles de todas las órdenes junto con los nombres de los empleados y clientes asociados
+use('ClaydB');
+db.orden.aggregate([
+    {
+        $lookup: {
+            from: "empleado",
+            localField: "Idmpleado",
+            foreignField: "id",
+            as: "empleado"
+        }
+    },
+    {
+        $lookup: {
+            from: "cliente",
+            localField: "IdCliente",
+            foreignField: "id",
+            as: "cliente"
+        }
+    },
+    {
+        $unwind: "$empleado"
+    },
+    {
+        $unwind: "$cliente"
+    },
+    {
+        $project: {
+            _id: 0,
+            "Fecha de la Orden": "$fecha",
+            "Detalle de la Orden": "$detalle_orden",
+            "Nombre del Empleado": "$empleado.nombre",
+            "Cargo del Empleado": "$empleado.cargo",
+            "Nombre del Cliente": "$cliente.nombre",
+            "Tipo de Persona del Cliente": "$cliente.tipo_persona"
+        }
+    }
+]);
+
+//!5. Listar los productos disponibles en el inventario junto con su talla y color
+use('ClaydB');
+db.inventario.aggregate([
+    {
+        $lookup: {
+            from: "orden",
+            localField: "IdPrenda",
+            foreignField: "detalle_orden.PrendaId",
+            as: "prenda_info"
+        }
+    },
+    {
+        $unwind: "$prenda_info"
+    },
+    {
+        $lookup: {
+            from: "prenda",
+            localField: " ",
+            foreignField: "detalle_orden.PrendaId",
+            as: "prenda_info"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            "Nombre del Producto": "$prenda_info.Nombre",
+            Talla: "$talla",
+            Color: "$prenda_info.detalle_orden.color",
+        }
+    }
+])
+
+//6. Mostrar todos los proveedores junto con la lista de insumos que suministran
+use('ClaydB');
+db.proveedor.aggregate([
+    {
+        $lookup: {
+            from: "insumo",
+            localField: "id",
+            foreignField: "id",
+            as: "insumos"
+        }
+    },
+    {
+        $unwind: {
+          path: "$insumos"
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            id:1,
+            NitProveedor: 1,
+            Nombre: 1,
+            insumos: {
+                nombre: 1,
+                valor_unit: 1,
+                Cantidad: 1
+            }
+        }
+    }
+]);
+
+//7.Encontrar la cantidad de ventas realizadas por cada empleado
+use('ClaydB');
+db.venta.aggregate([
+    {
+        $group: {
+            _id: "$IdEmpleado",
+            totalVentas: { $sum: 1 }
+        }
+    },
+    {
+        $lookup: {
+            from: "empleado",
+            localField: "_id",
+            foreignField: "id",
+            as: "empleadoInfo"
+        }
+    },
+    {
+        $unwind: "$empleadoInfo"
+    },
+    {
+        $project: {
+            empleadoNombre: "$empleadoInfo.nombre",
+            totalVentas: 1
+        }
+    }
+])
+
+//8.Mostrar la lista de órdenes en proceso junto con los nombres de los clientes y empleados asociados
+use('ClaydB');
+db.orden.aggregate([
+    {
+        $match: { "detalle_orden.estado": "En proceso" }
+    },
+    {
+        $lookup: {
+            from: "cliente",
+            localField: "IdCliente",
+            foreignField: "id",
+            as: "cliente_info"
+        }
+    },
+    {
+        $unwind: "$cliente_info"
+    },
+    {
+        $lookup: {
+            from: "empleado",
+            localField: "Idmpleado",
+            foreignField: "id",
+            as: "empleado_info"
+        }
+    },
+    {
+        $unwind: "$empleado_info"
+    },
+    {
+        $project: {
+            "_id": 0,
+            "OrdenID": "$id",
+            "FechaOrden": "$fecha",
+            "Cliente": "$cliente_info.nombre",
+            "Empleado": "$empleado_info.nombre"
+        }
+    }
+])
+
+//9. Obtener el nombre de la empresa y su respectivo representante legal junto con el nombre del municipio al que pertenecen
+use('ClaydB');
+db.empresa.aggregate([
+    {
+        $lookup: {
+            from: "ubicacion",
+            localField: "IdUbicacion",
+            foreignField: "id",
+            as: "ubicacion"
+        }
+    },
+    {
+        $unwind: "$ubicacion"
+    },
+    {
+        $project: {
+            "Nombre de la empresa": "$razon_social",
+            "Representante legal": "$representante_legal",
+            "Municipio": "$ubicacion.municipio"
+        }
+    }
+])
+//12 Mostrar la lista de empleados y la duración de su empleo en años
+use('ClaydB');
+db.empleado.aggregate([
+    {
+        $lookup: {
+            from: "ubicacion",
+            localField: "IdUbicacion",
+            foreignField: "id",
+            as: "ubicacion"
+        }
+    },
+    {
+        $unwind: "$ubicacion"
+    },
+    {
+        $project: {
+            "Nombre del empleado": "$nombre",
+            "Cargo": "$cargo",
+            "Fecha de ingreso": "$fecha_ingreso",
+            "Duración de empleo (años)": {
+                $floor: {
+                    $divide: [
+                        {
+                            $subtract: [new Date(), "$fecha_ingreso"]
+                        },
+                        31536000000 // 1 año en milisegundos
+                    ]
+                }
+            }
+        }
+    }
+])
